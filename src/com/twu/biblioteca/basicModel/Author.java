@@ -8,22 +8,22 @@ import java.util.List;
  */
 public class Author {
     private final String name;
-    private List<Book> productions;
+    private List<Production> productions;
 
     public Author( String name ) {
         this.name = name;
-        productions = new ArrayList<Book>();
+        productions = new ArrayList<Production>();
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Book> getProductions() {
+    public List<Production> getProductions() {
         return productions;
     }
 
-    public void addProduction( Book book ){
-        productions.add(book);
+    public void addProduction( Production production ){
+        productions.add(production);
     }
 }

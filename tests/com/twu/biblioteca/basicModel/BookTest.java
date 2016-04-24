@@ -19,7 +19,7 @@ public class BookTest {
         authors.add(new Author("James Whittaker"));
         authors.add(new Author("Jason Arbob"));
         authors.add(new Author("Jeff Carollo"));
-        String id = BookList.createBookID();
+        String id = ProductionList.createObjectID();
         book = new Book(id, "How Google Tests Software", authors, 2012);
     }
 
