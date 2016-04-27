@@ -20,10 +20,12 @@ public class UserProfilePanel extends JPanel{
         titleLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 
         JPanel profilePanel = new JPanel();
+        profilePanel.setLayout(new GridLayout(10,1));
+        profilePanel.setSize(200,300);
         User user = Library.getInstance().getPresentUser();
         JLabel nameLabel = new JLabel("Name: " + user.getName());
         JLabel libNumLabel = new JLabel("Library Number: " + user.getLibNum());
-        JLabel emailLabel = new JLabel(("Email: " + user.getEmail()));
+        JLabel emailLabel = new JLabel("Email: " + user.getEmail());
         JLabel addressLabel = new JLabel("Address: " + user.getAddress());
         JLabel phoneLabel = new JLabel("Phone: " + user.getPhoneNumber());
         profilePanel.add(nameLabel);
@@ -31,11 +33,19 @@ public class UserProfilePanel extends JPanel{
         profilePanel.add(emailLabel);
         profilePanel.add(addressLabel);
         profilePanel.add(phoneLabel);
-        profilePanel.setLayout(new FlowLayout());
-        profilePanel.setSize(300,400);
 
-        add(titleLabel);
+        setLayout(new BorderLayout());
+        add(titleLabel, BorderLayout.NORTH);
         add(profilePanel);
+    }
+
+    public static void showUserProfilePanel( Container contentPane ) {
+        contentPane.removeAll();
+        contentPane.add( new UserProfilePanel() );
+        contentPane.repaint();
+        contentPane.validate();
+        contentPane.invalidate();
+        contentPane.validate();
     }
 }
 ;

@@ -10,14 +10,17 @@ import java.awt.event.ActionListener;
 /**
  * Created by Peizhen Zheng on 2016/4/21.
  */
-public class BookListPanel extends JPanel {
-    private JTable bookListTable;
+public class ProductionListPanel extends JPanel {
+    private JTable productionListTable;
     private ProductionTableModel productionTableModel;
+    private ProductionList productionList;
     private JPanel buttonPanel;
     private JButton checkoutButton;
     private JButton returnButton;
 
-    public BookListPanel() {
+    public ProductionListPanel( ProductionTableModel productionTableModel, ProductionList productionList ) {
+        this.productionTableModel = productionTableModel;
+        this.productionList = productionList;
         initComponents();
         initEventListeners();
     }
@@ -25,11 +28,10 @@ public class BookListPanel extends JPanel {
     private void initComponents() {
         setLayout(new BorderLayout());
 
-        //add book lists
-        productionTableModel = new ProductionTableModel();
-        productionTableModel.setProductions(ProductionList.getAvailableObjects());
-        bookListTable = new JTable(productionTableModel);
-        JScrollPane scrollPane = new JScrollPane(bookListTable);
+        //add production lists
+        productionTableModel.setProductions(productionList.getAvailableProductions());
+        productionListTable = new JTable(productionTableModel);
+        JScrollPane scrollPane = new JScrollPane(productionListTable);
         this.add(scrollPane);
 
         //add operation buttons: check out and return
@@ -46,7 +48,7 @@ public class BookListPanel extends JPanel {
         checkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int rowIndex = bookListTable.getSelectedRow();
+                int rowIndex = productionListTable.getSelectedRow();
                 productionTableModel.deleteRow(rowIndex);
                 //System.out.println("the books size after checkout:" + ProductionList.getTotalCount());
             }
@@ -58,24 +60,24 @@ public class BookListPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 final JDialog returnDialog = new JDialog();
                 returnDialog.setSize(400,150);
-                returnDialog.setTitle("Return Book");
+                returnDialog.setTitle("Return Production");
 
-                JLabel bookNameLab = new JLabel("Input the ID of the book to return:");
-                final JTextField bookIDTextField = new JTextField(20);
-                JButton returnConfirmButton = new JButton("confirm to return the book");
+                JLabel productionNameLab = new JLabel("Input the ID of the production to return:");
+                final JTextField productionIDTextField = new JTextField(20);
+                JButton returnConfirmButton = new JButton("confirm to return the production");
 
                 returnDialog.setLayout(new FlowLayout());
-                returnDialog.add(bookNameLab);
-                returnDialog.add(bookIDTextField);
+                returnDialog.add(productionNameLab);
+                returnDialog.add(productionIDTextField);
                 returnDialog.add(returnConfirmButton);
                 returnDialog.setVisible(true);
+                returnDialog.setLocationRelativeTo(productionListTable);
 
                 returnConfirmButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String id = bookIDTextField.getText();
+                        String id = productionIDTextField.getText();
                         productionTableModel.addRow(id);
-                        //System.out.println("the books size after return:" + ProductionList.getTotalCount());
                         returnDialog.setVisible(false);
                     }
                 });
@@ -85,9 +87,9 @@ public class BookListPanel extends JPanel {
         });
     }
 
-    public static void showBookList( Container contentPane ) {
+    public static void showProductionList(Container contentPane, ProductionListPanel productionListPanel ) {
         contentPane.removeAll();
-        contentPane.add( new BookListPanel() );
+        contentPane.add( productionListPanel );
         contentPane.repaint();
         contentPane.validate();
         contentPane.invalidate();

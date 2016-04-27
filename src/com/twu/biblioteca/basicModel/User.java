@@ -12,13 +12,21 @@ public class User {
     private String libNum; //the login account, which is unique.
     private String password;    //the login password;
 
-    public User() {
+    public User(String name, String libNum, String password) {
+        this.name = name;
+        this.libNum = libNum;
+        this.password = password;
         checkHistory = new CheckHistory();
+        this.email = "";
+        this.address = "";
+        this.phoneNumber = "";
     }
 
-    public User(String name) {
-        this();
-        this.name = name;
+    public User(String name, String email, String address, String phoneNumber, String libNum, String password) {
+        this(name,libNum,password);
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {

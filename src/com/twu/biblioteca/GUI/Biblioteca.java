@@ -25,16 +25,18 @@ public class Biblioteca extends JFrame{
 
         setJMenuBar(new Menus());
 
-        JLabel welcomeLabel = new JLabel("Welcome to the Biblioteca System! choose \"List Books\" on the top to see the available book list.");
+        JLabel welcomeLabel = new JLabel("Welcome to the Biblioteca System!");
 
         contentPane.add(welcomeLabel);
+
+        setLocationRelativeTo(null);
     }
 
     private void initEventListeners() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public static void run() {
+    public static void start() {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

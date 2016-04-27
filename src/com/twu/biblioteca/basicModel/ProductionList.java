@@ -8,11 +8,16 @@ import java.util.*;
 /**
  * Created by Peizhen Zheng on 2016/4/21.
  */
-public class ProductionList<T extends ProductionList> {
-    private static Map<String, Production> productions;
-    private static List<String> availableProductions;
+public class ProductionList<T extends Production> {
+    private Map<String, T> productions;
+    private List<String> availableProductions;
 
-    public static int checkoutProduction(String productionID ) {
+    public ProductionList(){
+        productions = new HashMap<String, T>();
+        availableProductions = new ArrayList<String>();
+    }
+
+    public int checkoutProduction(String productionID ) {
         if( !availableProductions.contains(productionID) ){
             MessageDialog.showMessageDialog("That production is not available.", JOptionPane.ERROR_MESSAGE);
             return -1;
@@ -24,7 +29,7 @@ public class ProductionList<T extends ProductionList> {
         return 1;
     }
 
-    public static int returnProduction(String productionID ) {
+    public int returnProduction(String productionID ) {
         if( !productions.containsKey(productionID) ) {
             MessageDialog.showMessageDialog("That is not a valid production to return.", JOptionPane.ERROR_MESSAGE);
             return -1;
@@ -36,23 +41,23 @@ public class ProductionList<T extends ProductionList> {
         return 1;
     }
 
-    public static List<String> getAvailableProductions() {
+    public List<String> getAvailableProductions() {
         return availableProductions;
     }
 
-    public static Map<String, Production> getAllProductions() {
+    public Map<String, T> getAllProductions() {
         return productions;
     }
 
-    public static String createProductionID(){
+    public String createProductionID(){
         return String.valueOf( productions.size() + 1 );
     }
 
-    public static Production getProduction(String id) {
+    public T getProduction(String id) {
         return productions.get(id);
     }
 
-    public static int getTotalCount() {
+    public int getTotalCount() {
         return productions.size();
     }
 }

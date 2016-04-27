@@ -19,7 +19,7 @@ public class BookTest {
         authors.add(new Author("James Whittaker"));
         authors.add(new Author("Jason Arbob"));
         authors.add(new Author("Jeff Carollo"));
-        String id = ProductionList.createObjectID();
+        String id = Library.getInstance().getBookList().createProductionID();
         book = new Book(id, "How Google Tests Software", authors, 2012);
     }
 
@@ -40,7 +40,7 @@ public class BookTest {
 
     @Test
     public void getPublishYear() throws Exception {
-        assertEquals(2012, book.getPublishYear());
+        assertEquals(2012, book.getYear());
     }
 
     @Test

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Peizhen Zheng on 2016/4/21.
  */
 public class Book extends Production {
-    public Book(String id, String name, int publishYear, List<Author> authors) {
+    public Book(String id, String name, List<Author> authors, int publishYear) {
         super( name, publishYear, authors );
         this.id = id;
     }

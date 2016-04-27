@@ -9,8 +9,9 @@ public class Movie extends Production {
     private String id;
     private int rating; //from 0-10, while 0 represents unrated.
 
-    public Movie(String name, int year, List<Author> authors ){
+    public Movie(String id, String name, int year, List<Author> authors ){
         super(name, year, authors);
+        this.id = id;
         rating = 0;
     }
 

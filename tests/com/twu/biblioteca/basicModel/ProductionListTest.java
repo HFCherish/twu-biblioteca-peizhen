@@ -1,5 +1,6 @@
 package com.twu.biblioteca.basicModel;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,6 +11,13 @@ import static org.junit.Assert.*;
  * Created by Peizhen Zheng on 2016/4/21.
  */
 public class ProductionListTest {
+    ProductionList bookList;
+    @Before
+    public void setUp() {
+        //test the checkout and return method using the booklist
+        bookList = Library.getInstance().getBookList();
+    }
+    
     @Test
     public void getBook() throws Exception {
 
@@ -17,62 +25,55 @@ public class ProductionListTest {
 
     @Test
     public void getTotalCount() throws Exception {
-        assertEquals(10, ProductionList.getTotalCount());
+        assertEquals(10, bookList.getTotalCount());
     }
 
     @Test
     public void checkoutBookRight() throws Exception {
-        ProductionList.checkoutObject("1");
-        //assertArrayEquals(new String[]{"2","3","4","5","6","7","8","9","10"}, ProductionList.getAvailableObjects().toArray());
-        assertTrue(ProductionList.getAvailableObjects().size()==9 && !ProductionList.getAvailableObjects().contains("1"));
-        ProductionList.returnObject("1");
+        bookList.checkoutProduction("1");
+        assertTrue(bookList.getAvailableProductions().size()==9 && !bookList.getAvailableProductions().contains("1"));
+        bookList.returnProduction("1");
         System.out.println("show book lists");
-        System.out.println(ProductionList.getAvailableObjects());
+        System.out.println(bookList.getAvailableProductions());
     }
 
     @Test
     public void checkoutBookWrong() throws Exception {
-        ProductionList.checkoutObject("1");
-        ProductionList.checkoutObject("1");
-        //assertArrayEquals(new String[]{"2","3","4","5","6","7","8","9","10"}, ProductionList.getAvailableObjects().toArray());
-        assertTrue(ProductionList.getAvailableObjects().size()==9 && !ProductionList.getAvailableObjects().contains("1"));
-        ProductionList.returnObject("1");
+        bookList.checkoutProduction("1");
+        bookList.checkoutProduction("1");
+        assertTrue(bookList.getAvailableProductions().size()==9 && !bookList.getAvailableProductions().contains("1"));
+        bookList.returnProduction("1");
         System.out.println("show book lists");
-        System.out.println(ProductionList.getAvailableObjects());
+        System.out.println(bookList.getAvailableProductions());
     }
 
     @Test
     public void returnBookRight() throws Exception {
-        ProductionList.checkoutObject("1");
-        ProductionList.returnObject("1");
-       // assertArrayEquals(new String[]{"1","2","3","4","5","6","7","8","9","10"}, ProductionList.getAvailableObjects().toArray());
-        assertTrue(ProductionList.getAvailableObjects().size()==10 && ProductionList.getAvailableObjects().contains("1"));
+        bookList.checkoutProduction("1");
+        bookList.returnProduction("1");
+        assertTrue(bookList.getAvailableProductions().size()==10 && bookList.getAvailableProductions().contains("1"));
         System.out.println("show book lists");
-        System.out.println(ProductionList.getAvailableObjects());
+        System.out.println(bookList.getAvailableProductions());
     }
 
     @Test
     public void returnBookWrong() throws Exception {
-        ProductionList.returnObject("0");
-        Arrays.sort(ProductionList.getAvailableObjects().toArray());
-        //assertArrayEquals(new String[]{"1","2","3","4","5","6","7","8","9","10"}, ProductionList.getAvailableObjects().toArray());
-        assertTrue(ProductionList.getAvailableObjects().size()==10 && ProductionList.getAvailableObjects().contains("1"));
+        bookList.returnProduction("0");
+        assertTrue(bookList.getAvailableProductions().size()==10 && bookList.getAvailableProductions().contains("1"));
         System.out.println("show book lists");
-        System.out.println(ProductionList.getAvailableObjects());
+        System.out.println(bookList.getAvailableProductions());
     }
 
     @Test
     public void getAvailableBooks() throws Exception {
-        Arrays.sort(ProductionList.getAvailableObjects().toArray());
-        //assertArrayEquals( new String[]{"1","2","3","4","5","6","7","8","9","10"}, ProductionList.getAvailableObjects().toArray() );
-        assertTrue(ProductionList.getAvailableObjects().size()==10 && ProductionList.getAvailableObjects().contains("1"));
+        assertTrue(bookList.getAvailableProductions().size()==10 && bookList.getAvailableProductions().contains("1"));
         System.out.println("show book lists");
-        System.out.println(ProductionList.getAvailableObjects());
+        System.out.println(bookList.getAvailableProductions());
     }
 
     @Test
     public void createBookID() throws Exception {
-        assertEquals("11", ProductionList.createObjectID());
+        assertEquals("11", bookList.createProductionID());
     }
 
 }

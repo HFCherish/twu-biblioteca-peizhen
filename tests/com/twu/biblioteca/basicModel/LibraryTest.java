@@ -12,12 +12,12 @@ public class LibraryTest {
     Library library;
     @Before
     public void setUp() throws Exception {
-        library = new Library();
+        library = Library.getInstance();
     }
 
     @Test
     public void getBookList() throws Exception {
-        assertNotNull( library.getBookList() );
+        assertNotNull(library.getBookList());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class LibraryTest {
 
     @Test
     public void getUsers() throws Exception {
-        assertNotNull(library.getUsers());
+        assertEquals(2, library.getUsers().size());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class LibraryTest {
 
     @Test
     public void setPresentUser() throws Exception {
-        User user = new User();
+        User user = new User("test","test","test");
         library.setPresentUser(user);
         assertEquals(user, library.getPresentUser());
     }

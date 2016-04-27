@@ -25,28 +25,34 @@ public class LoginDialog extends JDialog {
     private void initComponents() {
         //the input panel including account and password
         JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(2,2,2,5));
         JLabel accountLabel = new JLabel("account:");
         JLabel passwordLabel = new JLabel("password:");
-        accountTextField = new JTextField();
-        passwordField = new JPasswordField();
-        JLabel hint = new JLabel("The account is your library number, which is in the format xxx-xxxx");
-        hint.setForeground(Color.red);
+        accountTextField = new JTextField(10);
+        passwordField = new JPasswordField(10);
         inputPanel.add(accountLabel);
         inputPanel.add(accountTextField);
         inputPanel.add(passwordLabel);
         inputPanel.add(passwordField);
-        inputPanel.add(hint);
-        inputPanel.setLayout(new FlowLayout());
+
+        //hint for the input
+        JLabel hint;
+        hint = new JLabel("<html>The account is your library number, which is<br> in the format xxx-xxxx</html>");
+        hint.setForeground(Color.red);
 
         //login button
         loginButton = new JButton("login");
 
         Container contentPane = getContentPane();
         contentPane.add(inputPanel);
+        contentPane.add(hint);
         contentPane.add(loginButton);
 
+        setSize(300,170);
+        setLayout(new FlowLayout());
         setTitle("Login");
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     private void initEventListeners() {
@@ -55,16 +61,18 @@ public class LoginDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String account = accountTextField.getText();
-                String password = passwordField.getPassword().toString();
+                String password = new String(passwordField.getPassword());
                 boolean res = checkAccount(account, password);
                 if(res){
                     Library library = Library.getInstance();
                     library.setPresentUser( library.getUser(account));
                     setVisible(false);
-                    Biblioteca.run();
+                    Biblioteca.start();
                 }
             }
         });
+
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private boolean checkAccount(String account, String password) {
@@ -80,7 +88,7 @@ public class LoginDialog extends JDialog {
         return true;
     }
 
-    public static void main(String args){
+    public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

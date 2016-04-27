@@ -1,6 +1,7 @@
 package com.twu.biblioteca.GUI;
 
 import com.twu.biblioteca.basicModel.Book;
+import com.twu.biblioteca.basicModel.Library;
 import com.twu.biblioteca.basicModel.ProductionList;
 
 /**
@@ -14,7 +15,8 @@ public class BookTableModel extends ProductionTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Book book = (Book)ProductionList.getProduction(productions.get(rowIndex));
+        ProductionList<Book> bookList = Library.getInstance().getBookList();
+        Book book = bookList.getProduction(productions.get(rowIndex));
         switch(columnIndex) {
             case 0: return book.getId();
             case 1: return book.getName();
@@ -32,5 +34,25 @@ public class BookTableModel extends ProductionTableModel {
     @Override
     public String getColumnName(int column) {
         return tableHeads[column];
+    }
+
+    @Override
+    public void addRow( String productionID ) {
+        ProductionList<Book> bookList = Library.getInstance().getBookList();
+        if( bookList.getProduction(productionID) == null )
+            throw new RuntimeException("Add fails");
+        bookList.returnProduction(productionID);
+        fireTableRowsInserted(getRowCount()-1, getRowCount()-1);
+    }
+
+    /**
+     * delete according to the row
+     * @param rowIndex the row to remove
+     */
+    @Override
+    public void deleteRow( int rowIndex ) {
+        ProductionList<Book> bookList = Library.getInstance().getBookList();
+        bookList.checkoutProduction(productions.get(rowIndex));
+        fireTableRowsDeleted(getColumnCount(),getColumnCount());
     }
 }
